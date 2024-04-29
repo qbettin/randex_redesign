@@ -68,17 +68,17 @@ public class Randex {
 		findAnswers = new FindAnswers(input.getChars(), findProblems.getProbStarts(),
 									  findProblems.getProbStops());
 		randomizeProblems = new RandomizeProblems(nprob, rand); // Pass nprob to RandomizeProblems
-		randomizeProblems.execute();
+		//randomizeProblems.execute();
 		int[] numAnswers = new int[nprob];
 		for (int i=0; i<nprob; i++)
 			numAnswers[i] = findAnswers.getAnswerStarts()[i].length;
 		randomizeAnswers = new RandomizeAnswers(numAnswers, rand);
-		randomizeAnswers.execute();
+		//randomizeAnswers.execute();
 		Output output = new Output
 			(out, input.getChars(), findProblems.getProbStarts(), findProblems.getProbStops(),
 			 findAnswers.getAnswerStarts(), findAnswers.getAnswerStops(),
-			 randomizeProblems.probPerm,
-			 randomizeAnswers.answerPerms);
+			 randomizeProblems.getProbPerm(),
+			 randomizeAnswers.getAnswerPerms());
 		output.execute();
 	}
 	

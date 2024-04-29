@@ -9,19 +9,28 @@ import java.util.random.RandomGenerator;
 public class RandomizeProblems {
 
     /* The number of problems (in) */
-    int nprob;
+    private int nprob;
 
     /* The random number generator (in) */
     RandomGenerator rand;
 
     /* Permutation of problem IDs (out) */
-    int[] probPerm;
+    private int[] probPerm;
+
+    public int getNprob() {
+        return nprob;
+    }
+
+    public int[] getProbPerm() {
+        return probPerm;
+    }
 
     /* Constructs new instance from given fields.  Sets fields only,
        does nothing else. */
     public RandomizeProblems(int nprob, RandomGenerator rand) {
 	this.nprob = nprob;
 	this.rand = rand;
+    execute();
     }
 
     /* Constructs the probPerm. */

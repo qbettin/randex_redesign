@@ -9,19 +9,28 @@ public class RandomizeAnswers {
 
     /* For each i in 0..numProblems - 1, the number of answers to
      * problem i (in). */
-    int[] numAnswers;
+    private int[] numAnswers;
 
     /* Random number generator (in) */
     RandomGenerator rand;
 
     /* A permutation for each problem (out) */
-    int[][] answerPerms;
+    private int[][] answerPerms;
+
+	public int[] getNumAnswers() {
+		return numAnswers;
+	}
+
+	public int[][] getAnswerPerms() {
+		return answerPerms;
+	}
 
     /* Constructs new instance from given fields; sets the fields and
        does nothing else. */
     public RandomizeAnswers(int[] numAnswers,  RandomGenerator rand) {
 	this.numAnswers = numAnswers;
 	this.rand = rand;
+	execute();
     }
 
     /* Constructs random permutation for problem pid, writing to
