@@ -38,11 +38,11 @@ public class FindAnswers {
             int stop = probStops[pid];
 
             while (i < stop) {
-                if (match(chars, i, BEGIN_ENUMERATE.toCharArray())) {
+                if (StringUtils.match(chars, i, BEGIN_ENUMERATE.toCharArray())) {
                     i += BEGIN_ENUMERATE.length();
-                } else if (match(chars, i, END_ENUMERATE.toCharArray())) {
+                } else if (StringUtils.match(chars, i, END_ENUMERATE.toCharArray())) {
                     break;
-                } else if (match(chars, i, ITEM.toCharArray())) {
+                } else if (StringUtils.match(chars, i, ITEM.toCharArray())) {
                     startList.add(i);
                     i += ITEM.length();
                 } else {
@@ -53,7 +53,7 @@ public class FindAnswers {
             answerStartsList.add(startList);
         }
 
-        return to2DArray(answerStartsList);
+        return StringUtils.to2DArray(answerStartsList);
     }
 
     public int[][] findAnswerStops() {
@@ -65,14 +65,14 @@ public class FindAnswers {
             int stop = probStops[pid];
 
             while (i < stop) {
-                if (match(chars, i, BEGIN_ENUMERATE.toCharArray())) {
+                if (StringUtils.match(chars, i, BEGIN_ENUMERATE.toCharArray())) {
                     i += BEGIN_ENUMERATE.length();
-                } else if (match(chars, i, END_ENUMERATE.toCharArray())) {
+                } else if (StringUtils.match(chars, i, END_ENUMERATE.toCharArray())) {
                     break;
-                } else if (match(chars, i, ITEM.toCharArray())) {
+                } else if (StringUtils.match(chars, i, ITEM.toCharArray())) {
                     // Find the stop index of the current answer
                     int j = i + ITEM.length();
-                    while (j < stop && !match(chars, j, ITEM.toCharArray()) && !match(chars, j, END_ENUMERATE.toCharArray())) {
+                    while (j < stop && !(StringUtils.match(chars, j, ITEM.toCharArray())) && !(StringUtils.match(chars, j, END_ENUMERATE.toCharArray()))) {
                         j++;
                     }
                     stopList.add(j);
@@ -85,33 +85,6 @@ public class FindAnswers {
             answerStopsList.add(stopList);
         }
 
-        return to2DArray(answerStopsList);
-    }
-
-    private boolean match(char[] chars, int off, char[] sought) {
-        int n = sought.length;
-        if (off + n > chars.length)
-            return false;
-        for (int i = 0; i < n; i++) {
-            if (sought[i] != chars[off + i])
-                return false;
-        }
-        return true;
-    }
-
-    private int[][] to2DArray(ArrayList<ArrayList<Integer>> list) {
-        int[][] result = new int[list.size()][];
-        for (int i = 0; i < result.length; i++) {
-            ArrayList<Integer> sublist = list.get(i);
-            result[i] = toArray(sublist);
-        }
-        return result;
-    }
-
-    private int[] toArray(ArrayList<Integer> list) {
-        int[] result = new int[list.size()];
-        for (int i = 0; i < result.length; i++)
-            result[i] = list.get(i);
-        return result;
+        return StringUtils.to2DArray(answerStopsList);
     }
 }

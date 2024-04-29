@@ -57,7 +57,7 @@ public class Randex {
     /* Executes a complete tasks: instantiates all the modules with
        the approriate arguments, executes them in the appropriate
        order, writing output to standard out for now. */
-	   private void execute() throws FileNotFoundException, IOException {
+	private void execute() throws FileNotFoundException, IOException {
 		PrintStream out = System.out;
 		rand = new Random(seed);
 		input = new Input(filename);

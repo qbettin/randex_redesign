@@ -26,13 +26,13 @@ public class ProblemFinder {
         boolean inProblem = false;
 
         for (int i = 0; i < n; i++) {
-            if (match(chars, i, BEGIN_PROBLEM.toCharArray())) {
+            if (StringUtils.match(chars, i, BEGIN_PROBLEM.toCharArray())) {
                 if (inProblem) {
                     throw new RuntimeException("Encountered \\begin{problem} when inside a problem");
                 }
                 startList.add(i);
                 inProblem = true;
-            } else if (match(chars, i, END_PROBLEM.toCharArray())) {
+            } else if (StringUtils.match(chars, i, END_PROBLEM.toCharArray())) {
                 if (!inProblem) {
                     throw new RuntimeException("Encountered \\end{problem} when outside any problem");
                 }
@@ -45,8 +45,8 @@ public class ProblemFinder {
             throw new RuntimeException("Missing \\end{problem} for last problem");
         }
 
-        probStarts = toArray(startList);
-        probStops = toArray(stopList);
+        probStarts = StringUtils.toArray(startList);
+        probStops = StringUtils.toArray(stopList);
     }
 
     public int[] getProbStarts() {
@@ -57,22 +57,4 @@ public class ProblemFinder {
         return probStops;
     }
 
-    private static boolean match(char[] chars, int off, char[] sought) {
-        int n = sought.length;
-        if (off + n > chars.length)
-            return false;
-        for (int i = 0; i < n; i++) {
-            if (sought[i] != chars[off + i])
-                return false;
-        }
-        return true;
-    }
-
-    private int[] toArray(ArrayList<Integer> list) {
-        int[] result = new int[list.size()];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = list.get(i);
-        }
-        return result;
-    }
 }
