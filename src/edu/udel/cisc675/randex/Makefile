@@ -2,7 +2,7 @@
 # Type "make test1" to run a test involving exam1.tex.  Ditto
 # for test2, test3.
 
-SRC = Randex.java Input.java FindProblems.java FindAnswers.java \
+SRC = Randex.java Input.java ProblemFinder.java FindAnswers.java \
   RandomizeProblems.java RandomizeAnswers.java Output.java
 CLASSES = $(subst .java,.class,$(SRC))
 CP = ../../../..

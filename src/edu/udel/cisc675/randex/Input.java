@@ -1,42 +1,43 @@
 package edu.udel.cisc675.randex;
+import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Arrays;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-/* Module Input: reads the file and stores the sequence of characters
-   read in an array of char.  To use this class: instantiate it with
-   the filename, then call method execute(), then you can read the
-   field chars. */
 public class Input {
 
-    /* The name of the original file containing the exam (in) */
-    String filename;
+    private String filename;
+    private char[] chars;
 
-    /* The contents of the file, as an array of char (out) */
-    char[] chars;
-
-    /* Constructs a new instance with given filename.  Sets the
-       filename field and does nothing else */
     public Input(String filename) {
-	this.filename = filename;
+        this.filename = filename;
     }
 
-    /* Opens the file, reads it, and constructs chars. */
-    public void execute() throws FileNotFoundException, IOException {
-	FileReader fr = new FileReader(filename);
-	int len = 2, off = 0;
-	chars = new char[len];
-	while (true) {
-	    int nread = fr.read(chars, off, len-off);
-	    if (nread < 0) break;
-	    off += nread;
-	    if (off == len) { // double buffer size
-		len *= 2;
-		chars = Arrays.copyOf(chars, 2*len);
-	    }
+    // Public method to execute file reading process
+    public void execute() throws IOException {
+        readFromFile();
+        constructCharArray();
+    }
+
+    // Private method to read characters from file
+	private void readFromFile() throws IOException {
+		try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line).append("\n"); // Append newline character
+			}
+			chars = sb.toString().toCharArray();
+		}
 	}
-	fr.close();
-	chars = Arrays.copyOf(chars, chars.length); // trim to length
+
+    // Private method to construct character array
+    private void constructCharArray() {
+        // Optionally, you can resize the array here if needed
+        // For simplicity, I'll leave it as it is
+    }
+
+    // Getter method to access the character array
+    public char[] getChars() {
+        return chars;
     }
 }

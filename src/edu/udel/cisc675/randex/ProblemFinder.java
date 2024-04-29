@@ -11,7 +11,7 @@ import java.util.ArrayList;
    The client should instantiate this class with the chars produced
    by module Input, then call method execute, then read the fields
    probStarts and probStops. */
-public class FindProblems {
+public class ProblemFinder {
 
     /* "\begin{problem}" as character array. */
     public final static char[] beginProblem =
@@ -31,7 +31,7 @@ public class FindProblems {
     int[] probStops;
 
     /* Constructor: sets chars field and does nothing else. */
-    public FindProblems(char[] chars) {
+    public ProblemFinder(char[] chars) {
 	this.chars = chars;
     }
 

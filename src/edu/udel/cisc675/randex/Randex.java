@@ -24,7 +24,7 @@ public class Randex {
     // The other modules that will be instaniated and executed...
     
     private Input input;
-    private FindProblems findProblems;
+    private ProblemFinder findProblems;
     private FindAnswers findAnswers;
     private RandomizeProblems randomizeProblems;
     private RandomizeAnswers randomizeAnswers;
@@ -62,10 +62,10 @@ public class Randex {
 	rand = new Random(seed);
 	input = new Input(filename);
 	input.execute();
-	findProblems = new FindProblems(input.chars);
+	findProblems = new ProblemFinder(input.getChars());
 	findProblems.execute();
 	int nprob = findProblems.probStarts.length;
-	findAnswers = new FindAnswers(input.chars, findProblems.probStarts,
+	findAnswers = new FindAnswers(input.getChars(), findProblems.probStarts,
 				      findProblems.probStops);
 	findAnswers.execute();
 	randomizeProblems = new RandomizeProblems(nprob, rand);
@@ -76,7 +76,7 @@ public class Randex {
 	randomizeAnswers = new RandomizeAnswers(numAnswers, rand);
 	randomizeAnswers.execute();
 	Output output = new Output
-	    (out, input.chars, findProblems.probStarts, findProblems.probStops,
+	    (out, input.getChars(), findProblems.probStarts, findProblems.probStops,
 	     findAnswers.answerStarts, findAnswers.answerStops,
 	     randomizeProblems.probPerm,
 	     randomizeAnswers.answerPerms);
