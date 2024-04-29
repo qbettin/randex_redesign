@@ -28,37 +28,37 @@ public class RandomizeAnswers {
     /* Constructs new instance from given fields; sets the fields and
        does nothing else. */
     public RandomizeAnswers(int[] numAnswers,  RandomGenerator rand) {
-	this.numAnswers = numAnswers;
-	this.rand = rand;
-	execute();
+		this.numAnswers = numAnswers;
+		this.rand = rand;
+		execute();
     }
 
     /* Constructs random permutation for problem pid, writing to
        answerPerms[pid][*]. */
     private void randomizeProblem(int pid) {
-	int nanswer = numAnswers[pid];
-	for (int i=0; i<nanswer; i++)
-	    answerPerms[pid][i] = i;
-	//System.out.print("rands = ");
-	for (int i=nanswer-1; i>=0; i--) {
-	    int j = rand.nextInt(i+1);
-	    //System.out.print(" "+j);
-	    if (i!=j) {
-		int t = answerPerms[pid][i];
-		answerPerms[pid][i] = answerPerms[pid][j];
-		answerPerms[pid][j] = t;
-	    }
-	}
-	//System.out.println();
+		int nanswer = numAnswers[pid];
+		for (int i=0; i<nanswer; i++)
+			answerPerms[pid][i] = i;
+		//System.out.print("rands = ");
+		for (int i=nanswer-1; i>=0; i--) {
+			int j = rand.nextInt(i+1);
+			//System.out.print(" "+j);
+			if (i!=j) {
+			int t = answerPerms[pid][i];
+			answerPerms[pid][i] = answerPerms[pid][j];
+			answerPerms[pid][j] = t;
+			}
+		}
+		//System.out.println();
     }
 
     /* Constructs random permutations for each problem */
     public void execute() {
-	int nprob = numAnswers.length;
-	answerPerms = new int[nprob][];
-	for (int i=0; i<nprob; i++) {
-	    answerPerms[i] = new int[numAnswers[i]];
-	    randomizeProblem(i);
-	}
+		int nprob = numAnswers.length;
+		answerPerms = new int[nprob][];
+		for (int i=0; i<nprob; i++) {
+			answerPerms[i] = new int[numAnswers[i]];
+			randomizeProblem(i);
+		}
     }
 }
