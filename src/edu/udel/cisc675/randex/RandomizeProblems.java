@@ -30,11 +30,11 @@ public class RandomizeProblems {
     public RandomizeProblems(int nprob, RandomGenerator rand) {
         this.nprob = nprob;
         this.rand = rand;
-        execute();
+        createRandomProblems();
     }
 
     /* Constructs the probPerm. */
-    public void execute() {
+    public void createRandomProblems() {
         this.probPerm = new int[nprob];
         for (int i=0; i<nprob; i++)
             probPerm[i] = i;

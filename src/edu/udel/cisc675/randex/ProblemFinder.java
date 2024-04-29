@@ -12,12 +12,8 @@ public class ProblemFinder {
 
     public ProblemFinder(char[] chars) {
         this.chars = chars;
-		execute();
-    }
-
-	public void execute(){
 		findProblemIndices();
-	}
+    }
 
     private void findProblemIndices() {
         ArrayList<Integer> startList = new ArrayList<>();

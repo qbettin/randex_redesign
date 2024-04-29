@@ -30,7 +30,7 @@ public class RandomizeAnswers {
     public RandomizeAnswers(int[] numAnswers,  RandomGenerator rand) {
 		this.numAnswers = numAnswers;
 		this.rand = rand;
-		execute();
+		createRandomAnswers();
     }
 
     /* Constructs random permutation for problem pid, writing to
@@ -49,11 +49,10 @@ public class RandomizeAnswers {
 			answerPerms[pid][j] = t;
 			}
 		}
-		//System.out.println();
     }
 
     /* Constructs random permutations for each problem */
-    public void execute() {
+    public void createRandomAnswers() {
 		int nprob = numAnswers.length;
 		answerPerms = new int[nprob][];
 		for (int i=0; i<nprob; i++) {
