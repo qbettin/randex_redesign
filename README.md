@@ -1,7 +1,6 @@
 randex_redesign
 
-Critique of Design v1.
-exam3.tex is missing \end{problem}
+# Critique of Design v1.
 
 1. Randex.java:
 
@@ -27,7 +26,7 @@ exam3.tex is missing \end{problem}
   - The RandomizeAnswers class is responsible for constructing random permutations of answers for each problem. However, the class directly manipulates the answerPerms array and the random number generator instance.
   - To enhance modularity, separating the randomization logic within the RandomizeAnswers class and providing clear interfaces for interacting with the randomized answer permutations could help. This approach would improve the class's reusability and maintainability.
 
-Design v2:
+# Design v2:
 
 ## 1 - Module Names:
 
@@ -42,11 +41,16 @@ Design v2:
 
 ## 2 - Module Descriptions and Responsibilities:
 
-### Randex:
+### Main:
 
-- **Responsibilities**: Orchestrates the entire exam generation process by instantiating and executing all other modules in the appropriate order.
+- **Responsibilities**: Calls Randex to instantiate and execute other modules.
 - **Secrets**:
   - Manages the filename and seed for randomness.
+
+### Randex:
+
+- **Responsibilities**: Orchestrates the exam generation process by instantiating and executing all other modules in the appropriate order.
+- **Secrets**:
   - Coordinates the interaction between different modules.
 
 ### Input:
@@ -94,6 +98,7 @@ Design v2:
 
 ## 3 - USES Relation:
 
+- Main USES Randex
 - Randex USES Input, ProblemFinder, FindAnswers, RandomizeProblems, RandomizeAnswers, PrintUtil
 - Input USES StringUtils
 - ProblemFinder USES StringUtils
@@ -101,8 +106,13 @@ Design v2:
 - RandomizeProblems: No explicit USES relation
 - RandomizeAnswers: No explicit USES relation
 - PrintUtil: No explicit USES relation
+- StringUtils: No explicit USES relation
 
 ## 4 - Module Interfaces:
+
+### Main:
+
+- Method: main(String[] args)
 
 ### Randex:
 
@@ -148,3 +158,38 @@ Design v2:
 - Method: printRange(int start, int stop)
 - Method: printAnswer(int pid, int aid)
 - Method: printProblem(int pid)
+
+# Anticipation of Change
+
+Choose 3 such ways and explain (1) how design v1 would have to change to accommodate the change, and (2) how your design v2 would have to change
+
+## Change 1.
+### Allow users to produce n exams rather than just one
+Design v1
+- We would need another argument that the user could type in the main() function of the Randex module
+  - We would then need to loop the instantiation of Randex() n amounts of times
+  - on each iteration we should change the seed
+Design v2
+- We would need another argument that the user could type in the main() function of the Main module
+  - We would then need to loop the instantiation of Randex() n amounts of times
+  - on each iteration we should change the seed
+
+## Change 2.
+### Ignore text in LaTeX comments
+Design v1
+- Modify each use of the match() method to ignore text within LaTeX commants idicated by %.
+- Implement a mechanism to detect LaTeX comments (%).
+- Adjust the logic of the match() method to skip characters enclosed within LaTeX comments.
+Design v2
+- Modify the StringUtils.match() method to ignore text within LaTeX comments indicated by %.
+- Implement a mechanism within StringUtils.match() to identify and skip characters enclosed within LaTeX comments.
+- Update the usage of StringUtils.match() throughout the codebase to account for the new behavior.
+
+## Change 3.
+### Provide a way for the user to indicate correct answers
+Design v1
+- Extend the functionality of Randex to keep track of correct answers and produce an answer key at the end. This would involve additional data structures to store correct answers and modifications to the output generation logic.
+Design v2
+- Extend the functionality of Randex to keep track of correct answers and produce an answer key at the end. This would involve additional data structures to store correct answers and modifications to the output generation logic.
+- Implement a more user-friendly interface for specifying correct answers, such as a separate input file or interactive prompts.
+- Enhance error handling to notify the user of any discrepancies between specified correct answers and generated exams.
