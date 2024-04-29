@@ -38,7 +38,7 @@ public class Randex {
     /* Executes a complete tasks: instantiates all the modules with
        the approriate arguments, executes them in the appropriate
        order, writing output to standard out for now. */
-	private void execute() throws FileNotFoundException, IOException {
+	void execute() throws FileNotFoundException, IOException {
 		PrintStream out = System.out;
 		rand = new Random(seed);
 		input = new Input(filename);
@@ -63,19 +63,4 @@ public class Randex {
 		output.PrintOutput();
 	}
 	
-
-    /* Main method: command line arguments are: filename, seed */
-    public final static void main(String[] args)
-	throws FileNotFoundException, IOException {
-		if (args.length != 2) {
-			System.out.println
-			("Usage: java edu.udel.cisc675.randex.Test <filename> <seed>");
-			System.exit(1);
-		}
-		String filename = args[0];
-		long seed = Long.decode(args[1]);
-		//System.out.println("Seed = "+seed);
-		Randex randex = new Randex(filename, seed);
-		randex.execute();
-    }
 }
