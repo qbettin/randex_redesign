@@ -61,10 +61,10 @@ public class Randex {
 		PrintStream out = System.out;
 		rand = new Random(seed);
 		input = new Input(filename);
-		input.execute();
+
 		findProblems = new ProblemFinder(input.getChars());
-		findProblems.execute();
 		int nprob = findProblems.getProbStarts().length; // Add this line to calculate nprob
+
 		findAnswers = new FindAnswers(input.getChars(), findProblems.getProbStarts(),
 									  findProblems.getProbStops());
 		randomizeProblems = new RandomizeProblems(nprob, rand); // Pass nprob to RandomizeProblems

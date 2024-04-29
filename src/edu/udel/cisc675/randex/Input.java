@@ -8,14 +8,9 @@ public class Input {
     private String filename;
     private char[] chars;
 
-    public Input(String filename) {
+    public Input(String filename) throws IOException {
         this.filename = filename;
-    }
-
-    // Public method to execute file reading process
-    public void execute() throws IOException {
-        readFromFile();
-        constructCharArray();
+		readFromFile();
     }
 
     // Private method to read characters from file
@@ -29,12 +24,6 @@ public class Input {
 			chars = sb.toString().toCharArray();
 		}
 	}
-
-    // Private method to construct character array
-    private void constructCharArray() {
-        // Optionally, you can resize the array here if needed
-        // For simplicity, I'll leave it as it is
-    }
 
     // Getter method to access the character array
     public char[] getChars() {
