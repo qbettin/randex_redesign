@@ -57,31 +57,31 @@ public class Randex {
     /* Executes a complete tasks: instantiates all the modules with
        the approriate arguments, executes them in the appropriate
        order, writing output to standard out for now. */
-    private void execute() throws FileNotFoundException, IOException {
-	PrintStream out = System.out;
-	rand = new Random(seed);
-	input = new Input(filename);
-	input.execute();
-	findProblems = new ProblemFinder(input.getChars());
-	findProblems.execute();
-	int nprob = findProblems.probStarts.length;
-	findAnswers = new FindAnswers(input.getChars(), findProblems.probStarts,
-				      findProblems.probStops);
-	findAnswers.execute();
-	randomizeProblems = new RandomizeProblems(nprob, rand);
-	randomizeProblems.execute();
-	int[] numAnswers = new int[nprob];
-	for (int i=0; i<nprob; i++)
-	    numAnswers[i] = findAnswers.answerStarts[i].length;
-	randomizeAnswers = new RandomizeAnswers(numAnswers, rand);
-	randomizeAnswers.execute();
-	Output output = new Output
-	    (out, input.getChars(), findProblems.probStarts, findProblems.probStops,
-	     findAnswers.answerStarts, findAnswers.answerStops,
-	     randomizeProblems.probPerm,
-	     randomizeAnswers.answerPerms);
-	output.execute();
-    }
+	   private void execute() throws FileNotFoundException, IOException {
+		PrintStream out = System.out;
+		rand = new Random(seed);
+		input = new Input(filename);
+		input.execute();
+		findProblems = new ProblemFinder(input.getChars());
+		findProblems.execute();
+		int nprob = findProblems.getProbStarts().length; // Add this line to calculate nprob
+		findAnswers = new FindAnswers(input.getChars(), findProblems.getProbStarts(),
+									  findProblems.getProbStops());
+		randomizeProblems = new RandomizeProblems(nprob, rand); // Pass nprob to RandomizeProblems
+		randomizeProblems.execute();
+		int[] numAnswers = new int[nprob];
+		for (int i=0; i<nprob; i++)
+			numAnswers[i] = findAnswers.getAnswerStarts()[i].length;
+		randomizeAnswers = new RandomizeAnswers(numAnswers, rand);
+		randomizeAnswers.execute();
+		Output output = new Output
+			(out, input.getChars(), findProblems.getProbStarts(), findProblems.getProbStops(),
+			 findAnswers.getAnswerStarts(), findAnswers.getAnswerStops(),
+			 randomizeProblems.probPerm,
+			 randomizeAnswers.answerPerms);
+		output.execute();
+	}
+	
 
     /* Main method: command line arguments are: filename, seed */
     public final static void main(String[] args)
