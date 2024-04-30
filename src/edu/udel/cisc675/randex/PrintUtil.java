@@ -39,12 +39,12 @@ public class PrintUtil {
         }
     
         /* Prints the aid-th answer of problem pid */
-        public void printAnswer(int pid, int aid) {
+    public void printAnswer(int pid, int aid) {
         printRange(answerStarts[pid][aid], answerStops[pid][aid]);
-        }
+    }
     
         /* Prints problem pid, with answers permuted */
-        public void printProblem(int pid) {
+    public void printProblem(int pid) {
         int nanswer = answerStarts[pid].length;
         if (nanswer == 0) {
             printRange(probStarts[pid], probStops[pid]);
@@ -54,6 +54,6 @@ public class PrintUtil {
         for (int i=0; i<nanswer; i++)
             printAnswer(pid, answerPerms[pid][i]);
         printRange(answerStops[pid][nanswer-1], probStops[pid]);
-        }
+    }
 
 }

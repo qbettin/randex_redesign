@@ -2,34 +2,25 @@ randex_redesign
 
 # Critique of Design v1.
 
-1. Randex.java:
+When analyzing the original randex software, there are a couple things that make it 'bad'. First off, many of the match() and print() methods are defined and used in multiple modules, although they are the same method. These should be separated into seperated util files.
 
-- Issues:
-  - The Randex class serves as the main module of the application, but it directly instantiates and executes all other modules within the execute() method. This approach leads to high coupling between Randex and the other modules, making it less modular and reusable.
-  - To enhance modularity, the Randex class should delegate the execution of specific tasks to the seperate/corresponding modules rather than directly managing their instantiation and execution.
+Another issue we noticed is that the Randex class calls the 'execute' method for all the other modules. First off, using the same name 'execute' is not specific in what the module is actually doing. Renaming these would help people better understand how the code works. Also, having each corresponding module call its own 'execute' method on instantiation would make more sense rather than having Randex call them. Also, this allows for changability in the future, as 'execute' methods could be instantiaed at necessary times. 
 
-2. Input.java:
+Also, in Randex we are accessing the public variables for many of the modules. Implementing getters is a more secure and reliable way to get the values we want.
 
-- Issues:
-  - The Input class is responsible for reading the original exam file. The class should focus solely on input operations and not perform additional tasks like buffer resizing.
-  - To improve modularity, refactoring the Input class to handle only file reading operations, while delegating tasks such as buffer management to separate utility classes could be suitable.
+#### Parnas says, input format is determined to be a "design decision which [is] questionable and likely to change under many circumstances"
+- having one print util allows for reuse and the ability to easily add new methods to print on varrying input types
+- removing the main() part of Randex and making that the driver module allows for more separation of concerns, and can be made more flexible to varrying types of input
+- separating the call of execution methods in randex could allow for changes in input in the future
 
-3. Output.java:
-
-- Issues:
-  - The Output class is responsible for writing the randomized exam to an output stream. While the class successfully prints the exam with permuted problems and answers, it directly accesses data from multiple modules. This direct interaction increases coupling and reduces modularity.
-  - To enhance modularity, restructuring the Output class to receive processed data from other modules as input parameters, rather than directly accessing their fields could help. This change would improve the class's reusability.
-
-4. RandomizeAnswers.java:
-
-- Issues:
-  - The RandomizeAnswers class is responsible for constructing random permutations of answers for each problem. However, the class directly manipulates the answerPerms array and the random number generator instance.
-  - To enhance modularity, separating the randomization logic within the RandomizeAnswers class and providing clear interfaces for interacting with the randomized answer permutations could help. This approach would improve the class's reusability and maintainability.
+#### Parnas also says the following for Software Decision Module Decomposition: "the software utility module, which hides algorithms that are used in several other modules
+- separating the match() and print() methods in to their own utilities is good practice which is used by basically every software company ever
+- there is no reason to define the same utility in multiple modules, it is redundent, takes up space, and is non-modular
 
 # Design v2:
 
 ## 1 - Module Names:
-
+- Main
 - Randex
 - Input
 - ProblemFinder
@@ -76,25 +67,25 @@ randex_redesign
 
 - **Responsibilities**: Generates a random permutation of problem IDs.
 - **Secrets**:
-  - Implements the Fisher-Yates shuffling algorithm.
+  - The shuffling algorithm to randomize problems.
 
 ### RandomizeAnswers:
 
 - **Responsibilities**: Generates random permutations of answer indices for each problem.
 - **Secrets**:
-  - Implements the Fisher-Yates shuffling algorithm.
+  - The shuffling algorithm to randomize answers.
 
 ### StringUtils:
 
-- **Responsibilities**: Provides utility functions for string manipulation.
+- **Responsibilities**: Provides utility functions for string manipulation, specifically matching
 - **Secrets**:
-  - Contains generic string manipulation methods.
+  - the algorithm to find certain matches in the file
 
 ### PrintUtil:
 
 - **Responsibilities**: Prints exam content, including problems and answers, to an output stream.
 - **Secrets**:
-  - Formats and prints exam content based on specified rules.
+  - Formats and prints exam content based on specified rules. Hides 
 
 ## 3 - USES Relation:
 
@@ -165,31 +156,31 @@ Choose 3 such ways and explain (1) how design v1 would have to change to accommo
 
 ## Change 1.
 ### Allow users to produce n exams rather than just one
-Design v1
+#### Design v1
 - We would need another argument that the user could type in the main() function of the Randex module
   - We would then need to loop the instantiation of Randex() n amounts of times
   - on each iteration we should change the seed
-Design v2
+#### Design v2
 - We would need another argument that the user could type in the main() function of the Main module
   - We would then need to loop the instantiation of Randex() n amounts of times
   - on each iteration we should change the seed
 
 ## Change 2.
 ### Ignore text in LaTeX comments
-Design v1
+#### Design v1
 - Modify each use of the match() method to ignore text within LaTeX commants idicated by %.
 - Implement a mechanism to detect LaTeX comments (%).
 - Adjust the logic of the match() method to skip characters enclosed within LaTeX comments.
-Design v2
+#### Design v2
 - Modify the StringUtils.match() method to ignore text within LaTeX comments indicated by %.
 - Implement a mechanism within StringUtils.match() to identify and skip characters enclosed within LaTeX comments.
 - Update the usage of StringUtils.match() throughout the codebase to account for the new behavior.
 
 ## Change 3.
 ### Provide a way for the user to indicate correct answers
-Design v1
+#### Design v1
 - Extend the functionality of Randex to keep track of correct answers and produce an answer key at the end. This would involve additional data structures to store correct answers and modifications to the output generation logic.
-Design v2
+#### Design v2
 - Extend the functionality of Randex to keep track of correct answers and produce an answer key at the end. This would involve additional data structures to store correct answers and modifications to the output generation logic.
 - Implement a more user-friendly interface for specifying correct answers, such as a separate input file or interactive prompts.
 - Enhance error handling to notify the user of any discrepancies between specified correct answers and generated exams.
