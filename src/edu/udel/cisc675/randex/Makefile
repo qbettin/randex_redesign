@@ -25,10 +25,10 @@ test4: $(CLASSES)
 	java -cp $(CP) edu.udel.cisc675.randex.Main exam4.tex 4
 
 test5: $(CLASSES)
-	java -cp $(CP) edu.udel.cisc675.randex.Main exam5.tex 5
+	java -cp $(CP) edu.udel.cisc675.randex.Main exam5.tex 50
 
 test6: $(CLASSES)
-	java -cp $(CP) edu.udel.cisc675.randex.Main exam6.tex 6
+	java -cp $(CP) edu.udel.cisc675.randex.Main exam6.tex 100
 
 clean:
 	rm -f *.class *~
